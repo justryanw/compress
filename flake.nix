@@ -59,7 +59,6 @@
         # Set target audio bitrate
         T_ARATE=$O_ARATE
 
-
         # Calculate target video rate - MB -> KiB/s
         T_VRATE=$(\
             awk \
@@ -87,6 +86,8 @@
             -c:a aac \
             -b:a "$T_ARATE"k \
             "$T_FILE"
+
+        rm ffmpeg2pass*
       '';
     };
   };
