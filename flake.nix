@@ -7,7 +7,7 @@
     systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
     perSystem = { pkgs, system, ... }: {
       packages.default = pkgs.writeShellScriptBin "compress" ''
-              # Re-encode a video to a target size in MB.
+        # Re-encode a video to a target size in MB.
         # Example:
         #    ./this_script.sh video.mp4 15
 
