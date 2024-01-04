@@ -16,7 +16,10 @@
         total_bitrate=$(( $target_size / $length_round_up ))
         audio_bitrate=$(( 128 * 1000 )) # 128k bit rate
         video_bitrate=$(( $total_bitrate - $audio_bitrate ))
-        ${pkgs.ffmpeg}/bin/ffmpeg -i "$file" -b:v $video_bitrate -maxrate:v $video_bitrate -bufsize:v $(( $target_size / 20 )) -b:a $audio_bitrate "$output"
+        max_bitrate=$((4 * 1000 * 1000))
+        video_bitrate_limited=$(( $video_bitrate > $max_bitrate ? $max_bitrate : $video_bitrate))
+        echo "Video Bitrate $(($video_bitrate / 1000)) Kbps"
+        ${pkgs.ffmpeg}/bin/ffmpeg -i "$file" -vf scale=-1:720 -b:v $video_bitrate_limited -maxrate:v $video_bitrate_limited -bufsize:v $(( $target_size / 20 )) -b:a $audio_bitrate "$output"
       '';
     };
   };
